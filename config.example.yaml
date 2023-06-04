@@ -1,0 +1,15 @@
+Server:
+  Host: localhost
+  Port: 8080
+
+MySQL:
+  Host: localhost
+  Port: 3306
+  Username: root
+  Password: root
+  Database: test
+
+Redis:
+  Host: localhost
+  Port: 6379
+  Database: 0
