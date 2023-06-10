@@ -19,13 +19,13 @@ func SetupRouter() *gin.Engine {
 
 	// 路由配置
 	r.GET("/", Controller.Index)
-	r.GET("/pools", Controller.GetPools)
-	r.POST("/select/:poolID", Controller.DrewSelect)
 
+	r.GET("/pools", Controller.Pool.GetPools)
 	r.POST("/pool", Controller.Pool.CreatePool)
 	r.GET("/pool/:poolID", Controller.Pool.GetPool)
 	r.PATCH("/pool/:poolID", Controller.Pool.UpdatePool)
 	r.DELETE("/pool/:poolID", Controller.Pool.DeletePool)
+	r.POST("/pool/:poolID/select", Controller.Pool.DrewSelect)
 	r.GET("/pool/:poolID/results", Controller.Pool.GetResults)
 
 	r.POST("/pool/:poolID/selections", Controller.Selection.CreateSelection)

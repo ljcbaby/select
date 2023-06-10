@@ -16,11 +16,7 @@ func (c *RoleController) returnRoles(ctx *gin.Context, poolID int64) {
 	var roles []model.GroupRole
 	err := rs.GetRoles(poolID, &roles)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
@@ -58,11 +54,7 @@ func (c *RoleController) CreateRole(ctx *gin.Context) {
 	rs := service.RoleService{}
 	err = rs.CreateRole(poolID, req.Name)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	c.returnRoles(ctx, poolID)
@@ -95,11 +87,7 @@ func (c *RoleController) UpdateRole(ctx *gin.Context) {
 	rs := service.RoleService{}
 	v, err = rs.VerifyRole(poolID, id)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	if !v {
@@ -128,11 +116,7 @@ func (c *RoleController) UpdateRole(ctx *gin.Context) {
 	}
 	err = rs.UpdateRole(id, req.Name)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	c.returnRoles(ctx, poolID)
@@ -156,11 +140,7 @@ func (c *RoleController) DeleteRole(ctx *gin.Context) {
 	rs := service.RoleService{}
 	v, err = rs.VerifyRole(poolID, id)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	if !v {
@@ -172,11 +152,7 @@ func (c *RoleController) DeleteRole(ctx *gin.Context) {
 	}
 	err = rs.DeleteRole(id)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	c.returnRoles(ctx, poolID)

@@ -11,6 +11,21 @@ import (
 
 type PoolController struct{}
 
+func (c *PoolController) GetPools(ctx *gin.Context) {
+	ps := service.PoolService{}
+	var pools []model.PoolBase
+	err := ps.GetPools(&pools)
+	if err != nil {
+		returnMySQLError(ctx, err)
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "success",
+		"data": pools,
+	})
+}
+
 func (c *PoolController) checkPoolType(ctx *gin.Context) (bool, int64) {
 	poolId, err := strconv.ParseInt(ctx.Param("poolID"), 10, 64)
 	if err != nil {
@@ -24,11 +39,7 @@ func (c *PoolController) checkPoolType(ctx *gin.Context) (bool, int64) {
 	ps := service.PoolService{}
 	poolType, err := ps.GetPoolType(poolId)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return false, -100
 	}
 	if poolType != 3 {
@@ -71,11 +82,7 @@ func (c *PoolController) CreatePool(ctx *gin.Context) {
 	ps := service.PoolService{}
 	id, err := ps.CreatePool(req)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
@@ -116,17 +123,17 @@ func (c *PoolController) DeletePool(ctx *gin.Context) {
 			})
 			return
 		}
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"code": 0,
 		"msg":  "success",
 	})
+}
+
+func (c *Controller) DrewSelect(ctx *gin.Context) {
+	// 处理抽签的请求
 }
 
 func (c *PoolController) GetResults(ctx *gin.Context) {

@@ -16,11 +16,7 @@ func (c *GroupController) returnGroups(ctx *gin.Context, poolID int64) {
 	var groups []model.GroupRole
 	err := gs.GetGroups(poolID, &groups)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
@@ -58,11 +54,7 @@ func (c *GroupController) CreateGroup(ctx *gin.Context) {
 	gs := service.GroupService{}
 	err = gs.CreateGroup(poolID, req.Name)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	c.returnGroups(ctx, poolID)
@@ -95,11 +87,7 @@ func (c *GroupController) UpdateGroup(ctx *gin.Context) {
 	gs := service.GroupService{}
 	v, err = gs.VerifyGroup(poolID, id)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	if !v {
@@ -128,11 +116,7 @@ func (c *GroupController) UpdateGroup(ctx *gin.Context) {
 	}
 	err = gs.UpdateGroup(id, req.Name)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	c.returnGroups(ctx, poolID)
@@ -156,11 +140,7 @@ func (c *GroupController) DeleteGroup(ctx *gin.Context) {
 	gs := service.GroupService{}
 	v, err = gs.VerifyGroup(poolID, id)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	if !v {
@@ -172,11 +152,7 @@ func (c *GroupController) DeleteGroup(ctx *gin.Context) {
 	}
 	err = gs.DeleteGroup(id)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	c.returnGroups(ctx, poolID)

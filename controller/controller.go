@@ -4,8 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ljcbaby/select/model"
-	"github.com/ljcbaby/select/service"
 )
 
 type Controller struct {
@@ -22,25 +20,14 @@ func (c *Controller) Index(ctx *gin.Context) {
 	})
 }
 
-func (c *Controller) GetPools(ctx *gin.Context) {
-	ps := service.PoolService{}
-	var pools []model.PoolBase
-	err := ps.GetPools(&pools)
-	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
-		return
-	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "success",
-		"data": pools,
-	})
-}
-
 func (c *Controller) DrewSelect(ctx *gin.Context) {
 	// 处理抽签的请求
+}
+
+func returnMySQLError(ctx *gin.Context, err error) {
+	ctx.JSON(200, gin.H{
+		"code": 100,
+		"msg":  "MySQL error.",
+		"data": err.Error(),
+	})
 }

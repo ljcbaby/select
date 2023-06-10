@@ -16,11 +16,7 @@ func (c *SelectionController) returnSelections(ctx *gin.Context, poolID int64) {
 	var selections []model.Selection
 	err := ss.GetSelections(poolID, &selections)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
@@ -58,11 +54,7 @@ func (c *SelectionController) CreateSelection(ctx *gin.Context) {
 	ss := service.SelectionService{}
 	err = ss.CreateSelection(poolID, req)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	c.returnSelections(ctx, poolID)
@@ -94,11 +86,7 @@ func (c *SelectionController) UpdateSelection(ctx *gin.Context) {
 	ss := service.SelectionService{}
 	v, err = ss.VerifySelection(poolID, ID)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	if !v {
@@ -127,11 +115,7 @@ func (c *SelectionController) UpdateSelection(ctx *gin.Context) {
 	}
 	err = ss.UpdateSelection(ID, req)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	c.returnSelections(ctx, poolID)
@@ -154,11 +138,7 @@ func (c *SelectionController) DeleteSelection(ctx *gin.Context) {
 	ss := service.SelectionService{}
 	v, err = ss.VerifySelection(poolID, ID)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	if !v {
@@ -170,11 +150,7 @@ func (c *SelectionController) DeleteSelection(ctx *gin.Context) {
 	}
 	err = ss.DeleteSelection(ID)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	c.returnSelections(ctx, poolID)
