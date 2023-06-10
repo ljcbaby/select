@@ -63,17 +63,14 @@ func (s *PoolService) CreatePool(c model.PoolBase) (int64, error) {
 	return lastInsertID, nil
 }
 
-// GetPool 获取pool
 func (s *PoolService) GetPool(id int64, pool *model.Pool) error {
 	return nil
 }
 
-// UpdatePool 更新pool
 func (s *PoolService) UpdatePool(id int64, c model.PoolBase) error {
 	return nil
 }
 
-// DeletePool 删除pool
 func (s *PoolService) DeletePool(id int64) error {
 	var count int = 0
 	err := database.MySQL.QueryRow("SELECT COUNT(*) FROM pools WHERE ID = ?", id).Scan(&count)
@@ -94,7 +91,6 @@ func (s *PoolService) DeletePool(id int64) error {
 	return nil
 }
 
-// GetPoolType 获取pool类型
 func (s *PoolService) GetPoolType(id int64) (int, error) {
 	var poolType int
 	err := database.MySQL.QueryRow("SELECT Type FROM pools WHERE ID = ?", id).Scan(&poolType)
