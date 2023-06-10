@@ -23,9 +23,9 @@ func (c *Controller) Index(ctx *gin.Context) {
 }
 
 func (c *Controller) GetPools(ctx *gin.Context) {
-	service := service.PoolService{}
+	ps := service.PoolService{}
 	var pools []model.PoolBase
-	err := service.GetPools(&pools)
+	err := ps.GetPools(&pools)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code": 100,

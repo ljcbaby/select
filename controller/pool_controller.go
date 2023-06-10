@@ -11,6 +11,36 @@ import (
 
 type PoolController struct{}
 
+func (c *PoolController) checkPoolType(ctx *gin.Context) (bool, int64) {
+	poolId, err := strconv.ParseInt(ctx.Param("poolID"), 10, 64)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 10,
+			"msg":  "PoolID error.",
+			"data": err.Error(),
+		})
+		return false, -10
+	}
+	ps := service.PoolService{}
+	poolType, err := ps.GetPoolType(poolId)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 100,
+			"msg":  "MySQL error.",
+			"data": err.Error(),
+		})
+		return false, -100
+	}
+	if poolType != 3 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 11,
+			"msg":  "Pool type error.",
+		})
+		return false, -11
+	}
+	return true, poolId
+}
+
 func (c *PoolController) CreatePool(ctx *gin.Context) {
 	var req model.PoolBase
 	err := ctx.ShouldBindJSON(&req)
@@ -38,8 +68,8 @@ func (c *PoolController) CreatePool(ctx *gin.Context) {
 		return
 	}
 
-	service := service.PoolService{}
-	id, err := service.CreatePool(req)
+	ps := service.PoolService{}
+	id, err := ps.CreatePool(req)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code": 100,
@@ -48,14 +78,12 @@ func (c *PoolController) CreatePool(ctx *gin.Context) {
 		})
 		return
 	}
-	var data struct {
-		Id int64 `json:"id"`
-	}
-	data.Id = id
 	ctx.JSON(http.StatusOK, gin.H{
 		"code": 0,
 		"msg":  "success",
-		"data": data,
+		"data": gin.H{
+			"id": id,
+		},
 	})
 }
 
@@ -78,8 +106,8 @@ func (c *PoolController) DeletePool(ctx *gin.Context) {
 		return
 	}
 
-	service := service.PoolService{}
-	err = service.DeletePool(poolID)
+	ps := service.PoolService{}
+	err = ps.DeletePool(poolID)
 	if err != nil {
 		if err.Error() == "noPool" {
 			ctx.JSON(http.StatusOK, gin.H{

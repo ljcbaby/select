@@ -93,3 +93,16 @@ func (s *PoolService) DeletePool(id int64) error {
 	}
 	return nil
 }
+
+// GetPoolType 获取pool类型
+func (s *PoolService) GetPoolType(id int64) (int, error) {
+	var poolType int
+	err := database.MySQL.QueryRow("SELECT Type FROM pools WHERE ID = ?", id).Scan(&poolType)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			return 0, nil
+		}
+		return 0, err
+	}
+	return poolType, nil
+}
