@@ -4,7 +4,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Config 结构体表示配置项
 type Config struct {
 	Server struct {
 		Host string `yaml:"Host"`
@@ -26,8 +25,12 @@ type Config struct {
 	} `yaml:"Redis"`
 }
 
-// LoadConfig 加载配置文件
+var Conf *Config
+
 func LoadConfig() (*Config, error) {
+	if Conf != nil {
+		return Conf, nil
+	}
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
@@ -35,10 +38,10 @@ func LoadConfig() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	Config := &Config{}
-	err = viper.Unmarshal(Config)
+	Conf = &Config{}
+	err = viper.Unmarshal(Conf)
 	if err != nil {
 		return nil, err
 	}
-	return Config, nil
+	return Conf, nil
 }

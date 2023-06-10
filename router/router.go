@@ -21,12 +21,12 @@ func SetupRouter() *gin.Engine {
 	r.GET("/", Controller.Index)
 	r.GET("/pools", Controller.GetPools)
 	r.POST("/select/:poolID", Controller.DrewSelect)
-	r.GET("/result/:poolID", Controller.GetResult)
 
 	r.POST("/pool", Controller.Pool.CreatePool)
 	r.GET("/pool/:poolID", Controller.Pool.GetPool)
 	r.PATCH("/pool/:poolID", Controller.Pool.UpdatePool)
 	r.DELETE("/pool/:poolID", Controller.Pool.DeletePool)
+	r.GET("/pool/:poolID/results", Controller.Pool.GetResults)
 
 	r.POST("/pool/:poolID/selections", Controller.Selection.CreateSelection)
 	r.GET("/pool/:poolID/selections", Controller.Selection.GetSelections)

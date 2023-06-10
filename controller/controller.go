@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/ljcbaby/select/model"
+	"github.com/ljcbaby/select/service"
 )
 
 type Controller struct {
@@ -13,27 +15,32 @@ type Controller struct {
 	Role      *RoleController
 }
 
-func NewController() *Controller {
-	return &Controller{
-		// 初始化控制器依赖或成员变量
-	}
-}
-
 func (c *Controller) Index(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
-		"code": "0",
+		"code": 0,
 		"msg":  "Ljcbaby's draw backend.",
 	})
 }
 
 func (c *Controller) GetPools(ctx *gin.Context) {
-	// 处理获取pools的请求
+	service := service.PoolService{}
+	var pools []model.PoolBase
+	err := service.GetPools(&pools)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 100,
+			"msg":  "MySQL error.",
+			"data": err.Error(),
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "success",
+		"data": pools,
+	})
 }
 
 func (c *Controller) DrewSelect(ctx *gin.Context) {
 	// 处理抽签的请求
-}
-
-func (c *Controller) GetResult(ctx *gin.Context) {
-	// 处理获取result的请求
 }
