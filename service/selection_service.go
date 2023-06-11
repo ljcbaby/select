@@ -7,6 +7,33 @@ import (
 
 type SelectionService struct{}
 
+func (s *SelectionService) GetSelectionsByOrder(poolId int64, selections *[]model.Results) error {
+	rows, err := database.MySQL.Query("SELECT ID, Name FROM selections WHERE PoolID = ?", poolId)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	if rows.Next() {
+		var selection model.Results
+		err := rows.Scan(&selection.Id, &selection.Name)
+		if err != nil {
+			return err
+		}
+		*selections = append(*selections, selection)
+	}
+
+	if err := rows.Err(); err != nil {
+		return err
+	}
+
+	if len(*selections) == 0 {
+		*selections = []model.Results{}
+	}
+
+	return nil
+}
+
 func (s *SelectionService) GetSelections(poolId int64, selections *[]model.Selection) error {
 	rows, err := database.MySQL.Query("SELECT ID, Name, Description FROM selections WHERE PoolID = ?", poolId)
 	if err != nil {

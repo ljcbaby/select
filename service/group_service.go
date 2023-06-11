@@ -7,6 +7,33 @@ import (
 
 type GroupService struct{}
 
+func (s *GroupService) GetGroupsByOrder(poolId int64, groups *[]model.Results) error {
+	rows, err := database.MySQL.Query("SELECT ID, name FROM `groups` WHERE PoolID = ? ORDER BY Name ASC", poolId)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	if rows.Next() {
+		var group model.Results
+		err := rows.Scan(&group.Id, &group.GroupName)
+		if err != nil {
+			return err
+		}
+		*groups = append(*groups, group)
+	}
+
+	if err := rows.Err(); err != nil {
+		return err
+	}
+
+	if len(*groups) == 0 {
+		*groups = []model.Results{}
+	}
+
+	return nil
+}
+
 func (s *GroupService) GetGroups(poolId int64, groups *[]model.GroupRole) error {
 	rows, err := database.MySQL.Query("SELECT ID, name FROM groups WHERE PoolID = ?", poolId)
 	if err != nil {

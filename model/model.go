@@ -37,4 +37,13 @@ type Result struct {
 	Name      string    `json:"name"`
 	Identify  string    `json:"identify"`
 	Selection Selection `json:"selection"`
+	RoleName  string    `json:"roleName"`
+	UID       int64
+}
+
+type Results struct {
+	Id        int64    `json:"id"`
+	Name      string   `json:"name"`
+	GroupName string   `json:"groupName"`
+	Result    []Result `json:"result"`
 }

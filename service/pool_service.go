@@ -64,10 +64,34 @@ func (s *PoolService) CreatePool(c model.PoolBase) (int64, error) {
 }
 
 func (s *PoolService) GetPool(id int64, pool *model.Pool) error {
+	var count int = 0
+	err := database.MySQL.QueryRow("SELECT COUNT(*) FROM pools WHERE ID = ?", id).Scan(&count)
+	if err != nil {
+		return err
+	}
+	if count == 0 {
+		return errors.New("noPool")
+	}
+	err = database.MySQL.QueryRow("SELECT ID, Name, Description, Type, Status FROM pools WHERE ID = ?", id).Scan(&pool.Id, &pool.Name, &pool.Description, &pool.Type, &pool.Status)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
 func (s *PoolService) UpdatePool(id int64, c model.PoolBase) error {
+	var count int = 0
+	err := database.MySQL.QueryRow("SELECT COUNT(*) FROM pools WHERE ID = ?", id).Scan(&count)
+	if err != nil {
+		return err
+	}
+	if count == 0 {
+		return errors.New("noPool")
+	}
+	_, err = database.MySQL.Exec("UPDATE pools SET Name = ?, Description = ?, Type = ?, status = ? WHERE ID = ?", c.Name, c.Description, c.Type, c.Status, id)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
