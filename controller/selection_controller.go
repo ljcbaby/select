@@ -30,23 +30,27 @@ func (c *SelectionController) returnSelections(ctx *gin.Context, poolID int64) {
 
 func (c *SelectionController) CreateSelection(ctx *gin.Context) {
 	ps := PoolController{}
-	v, poolID := ps.checkPoolType(ctx)
-	if !v {
+	_, poolID := ps.checkPoolType(ctx, false)
+	if poolID < 0 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "PoolID error.",
+		})
 		return
 	}
 	var req model.Selection
 	err := ctx.ShouldBindJSON(&req)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
-			"code": 1,
+			"code": 2,
 			"msg":  "Body error.",
 			"data": err.Error(),
 		})
 		return
 	}
-	if len(req.Name) < 1 || len(req.Name) > 32 || req.Number < 1 {
+	if req.Number < 1 {
 		ctx.JSON(http.StatusOK, gin.H{
-			"code": 1,
+			"code": 2,
 			"msg":  "Body error.",
 		})
 		return
@@ -62,8 +66,12 @@ func (c *SelectionController) CreateSelection(ctx *gin.Context) {
 
 func (c *SelectionController) GetSelections(ctx *gin.Context) {
 	ps := PoolController{}
-	v, poolID := ps.checkPoolType(ctx)
-	if !v {
+	_, poolID := ps.checkPoolType(ctx, false)
+	if poolID < 0 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "PoolID error.",
+		})
 		return
 	}
 	c.returnSelections(ctx, poolID)
@@ -71,27 +79,31 @@ func (c *SelectionController) GetSelections(ctx *gin.Context) {
 
 func (c *SelectionController) UpdateSelection(ctx *gin.Context) {
 	ps := PoolController{}
-	v, poolID := ps.checkPoolType(ctx)
-	if !v {
+	_, poolID := ps.checkPoolType(ctx, false)
+	if poolID < 0 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "PoolID error.",
+		})
 		return
 	}
 	ID, err := strconv.ParseInt(ctx.Param("selectionID"), 10, 64)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
-			"code": 1,
+			"code": 2,
 			"msg":  "selectionID error.",
 		})
 		return
 	}
 	ss := service.SelectionService{}
-	v, err = ss.VerifySelection(poolID, ID)
+	v, err := ss.VerifySelection(poolID, ID)
 	if err != nil {
 		returnMySQLError(ctx, err)
 		return
 	}
 	if !v {
 		ctx.JSON(http.StatusOK, gin.H{
-			"code": 1,
+			"code": 2,
 			"msg":  "selectionID error.",
 		})
 		return
@@ -100,15 +112,15 @@ func (c *SelectionController) UpdateSelection(ctx *gin.Context) {
 	err = ctx.ShouldBindJSON(&req)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
-			"code": 1,
+			"code": 3,
 			"msg":  "Body error.",
 			"data": err.Error(),
 		})
 		return
 	}
-	if len(req.Name) < 1 || len(req.Name) > 32 || req.Number < 1 {
+	if req.Number < 1 {
 		ctx.JSON(http.StatusOK, gin.H{
-			"code": 1,
+			"code": 3,
 			"msg":  "Body error.",
 		})
 		return
@@ -123,27 +135,31 @@ func (c *SelectionController) UpdateSelection(ctx *gin.Context) {
 
 func (c *SelectionController) DeleteSelection(ctx *gin.Context) {
 	ps := PoolController{}
-	v, poolID := ps.checkPoolType(ctx)
-	if !v {
+	_, poolID := ps.checkPoolType(ctx, false)
+	if poolID < 0 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "PoolID error.",
+		})
 		return
 	}
 	ID, err := strconv.ParseInt(ctx.Param("selectionID"), 10, 64)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
-			"code": 1,
+			"code": 2,
 			"msg":  "selectionID error.",
 		})
 		return
 	}
 	ss := service.SelectionService{}
-	v, err = ss.VerifySelection(poolID, ID)
+	v, err := ss.VerifySelection(poolID, ID)
 	if err != nil {
 		returnMySQLError(ctx, err)
 		return
 	}
 	if !v {
 		ctx.JSON(http.StatusOK, gin.H{
-			"code": 1,
+			"code": 2,
 			"msg":  "selectionID error.",
 		})
 		return

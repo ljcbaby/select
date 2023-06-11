@@ -30,7 +30,7 @@ func (c *RoleController) returnRoles(ctx *gin.Context, poolID int64) {
 
 func (c *RoleController) CreateRole(ctx *gin.Context) {
 	pc := PoolController{}
-	v, poolID := pc.checkPoolType(ctx)
+	v, poolID := pc.checkPoolType(ctx, true)
 	if !v {
 		return
 	}
@@ -62,7 +62,7 @@ func (c *RoleController) CreateRole(ctx *gin.Context) {
 
 func (c *RoleController) GetRoles(ctx *gin.Context) {
 	pc := PoolController{}
-	v, poolId := pc.checkPoolType(ctx)
+	v, poolId := pc.checkPoolType(ctx, true)
 	if !v {
 		return
 	}
@@ -71,7 +71,7 @@ func (c *RoleController) GetRoles(ctx *gin.Context) {
 
 func (c *RoleController) UpdateRole(ctx *gin.Context) {
 	pc := PoolController{}
-	v, poolID := pc.checkPoolType(ctx)
+	v, poolID := pc.checkPoolType(ctx, true)
 	if !v {
 		return
 	}
@@ -124,7 +124,7 @@ func (c *RoleController) UpdateRole(ctx *gin.Context) {
 
 func (c *RoleController) DeleteRole(ctx *gin.Context) {
 	pc := PoolController{}
-	v, poolID := pc.checkPoolType(ctx)
+	v, poolID := pc.checkPoolType(ctx, true)
 	if !v {
 		return
 	}

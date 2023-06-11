@@ -35,7 +35,7 @@ func (s *GroupService) GetGroupsByOrder(poolId int64, groups *[]model.Results) e
 }
 
 func (s *GroupService) GetGroups(poolId int64, groups *[]model.GroupRole) error {
-	rows, err := database.MySQL.Query("SELECT ID, name FROM groups WHERE PoolID = ?", poolId)
+	rows, err := database.MySQL.Query("SELECT ID, name FROM `groups` WHERE poolID = ?", poolId)
 	if err != nil {
 		return err
 	}
@@ -62,7 +62,7 @@ func (s *GroupService) GetGroups(poolId int64, groups *[]model.GroupRole) error 
 }
 
 func (s *GroupService) CreateGroup(poolId int64, c string) error {
-	_, err := database.MySQL.Exec("INSERT INTO groups (PoolID, Name) VALUES (?, ?)", poolId, c)
+	_, err := database.MySQL.Exec("INSERT INTO `groups` (PoolID, Name) VALUES (?, ?)", poolId, c)
 	if err != nil {
 		return err
 	}
@@ -70,7 +70,7 @@ func (s *GroupService) CreateGroup(poolId int64, c string) error {
 }
 
 func (s *GroupService) UpdateGroup(id int64, c string) error {
-	_, err := database.MySQL.Exec("UPDATE groups SET Name = ? WHERE ID = ?", c, id)
+	_, err := database.MySQL.Exec("UPDATE `groups` SET Name = ? WHERE ID = ?", c, id)
 	if err != nil {
 		return err
 	}
@@ -78,7 +78,7 @@ func (s *GroupService) UpdateGroup(id int64, c string) error {
 }
 
 func (s *GroupService) DeleteGroup(id int64) error {
-	_, err := database.MySQL.Exec("DELETE FROM groups WHERE ID = ?", id)
+	_, err := database.MySQL.Exec("DELETE FROM `groups` WHERE ID = ?", id)
 	if err != nil {
 		return err
 	}
@@ -87,7 +87,7 @@ func (s *GroupService) DeleteGroup(id int64) error {
 
 func (s *GroupService) VerifyGroup(poolId int64, id int64) (bool, error) {
 	var count int
-	err := database.MySQL.QueryRow("SELECT COUNT(*) FROM groups WHERE PoolID = ? AND ID = ?", poolId, id).Scan(&count)
+	err := database.MySQL.QueryRow("SELECT COUNT(*) FROM `groups` WHERE PoolID = ? AND ID = ?", poolId, id).Scan(&count)
 	if err != nil {
 		return false, err
 	}

@@ -30,7 +30,7 @@ func (c *GroupController) returnGroups(ctx *gin.Context, poolID int64) {
 
 func (c *GroupController) CreateGroup(ctx *gin.Context) {
 	ps := PoolController{}
-	v, poolID := ps.checkPoolType(ctx)
+	v, poolID := ps.checkPoolType(ctx, true)
 	if !v {
 		return
 	}
@@ -62,7 +62,7 @@ func (c *GroupController) CreateGroup(ctx *gin.Context) {
 
 func (c *GroupController) GetGroups(ctx *gin.Context) {
 	ps := PoolController{}
-	v, poolID := ps.checkPoolType(ctx)
+	v, poolID := ps.checkPoolType(ctx, true)
 	if !v {
 		return
 	}
@@ -71,7 +71,7 @@ func (c *GroupController) GetGroups(ctx *gin.Context) {
 
 func (c *GroupController) UpdateGroup(ctx *gin.Context) {
 	ps := PoolController{}
-	v, poolID := ps.checkPoolType(ctx)
+	v, poolID := ps.checkPoolType(ctx, true)
 	if !v {
 		return
 	}
@@ -124,7 +124,7 @@ func (c *GroupController) UpdateGroup(ctx *gin.Context) {
 
 func (c *GroupController) DeleteGroup(ctx *gin.Context) {
 	pc := PoolController{}
-	v, poolID := pc.checkPoolType(ctx)
+	v, poolID := pc.checkPoolType(ctx, true)
 	if !v {
 		return
 	}

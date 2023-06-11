@@ -26,7 +26,7 @@ func (c *PoolController) GetPools(ctx *gin.Context) {
 	})
 }
 
-func (c *PoolController) checkPoolType(ctx *gin.Context) (bool, int64) {
+func (c *PoolController) checkPoolType(ctx *gin.Context, r bool) (bool, int64) {
 	poolId, err := strconv.ParseInt(ctx.Param("poolID"), 10, 64)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
@@ -43,11 +43,13 @@ func (c *PoolController) checkPoolType(ctx *gin.Context) (bool, int64) {
 		return false, -100
 	}
 	if poolType != 3 {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 11,
-			"msg":  "Pool type error.",
-		})
-		return false, -11
+		if r {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 11,
+				"msg":  "Pool type error.",
+			})
+		}
+		return false, poolId
 	}
 	return true, poolId
 }
@@ -294,7 +296,7 @@ func (c *PoolController) DeletePool(ctx *gin.Context) {
 	})
 }
 
-func (c *Controller) DrewSelect(ctx *gin.Context) {
+func (c *PoolController) DrewSelect(ctx *gin.Context) {
 	// 处理抽签的请求
 }
 
