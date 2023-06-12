@@ -9,6 +9,8 @@ import (
 
 // SetupRouter 配置路由
 func SetupRouter() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
+
 	r := gin.Default()
 
 	// 创建控制器实例

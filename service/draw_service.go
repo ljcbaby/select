@@ -96,14 +96,14 @@ func (s *DrawService) Draw(req model.Draw, result *model.Result) error {
 		_, err = tx.Exec("UPDATE selections SET used = used + 1 WHERE ID = ?", c)
 		if err != nil {
 			tx.Rollback()
-			return err
-			// continue
+			// return err
+			continue
 		}
 		_, err = tx.Exec("INSERT INTO result (poolID, selectID, name, userIdentify) VALUES(?, ?, ?, ?)", req.PoolId, c, req.Name, req.Identify)
 		if err != nil {
 			tx.Rollback()
-			return err
-			// continue
+			// return err
+			continue
 		}
 		err = tx.Commit()
 		if err != nil {

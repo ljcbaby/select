@@ -1,1573 +1,2887 @@
-openapi: 3.1.0
-info:
-  title: 抽签
-  version: 1.0.0
-servers:
-- url: /
-tags:
-- name: 抽签
-- name: 签
-- name: 分角色用
-- name: 分角色用/组
-- name: 分角色用/角色
-paths:
-  /pools:
-    get:
-      deprecated: false
-      parameters: []
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200'
-          description: 成功
-      summary: 获取抽签列表
-      tags: []
-      x-apifox-folder: ""
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-83655075-run
-  /pool/{id}:
-    delete:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_2'
-          description: 成功
-      summary: 删除抽签
-      tags:
-      - 抽签
-      x-apifox-folder: 抽签
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-83655663-run
-    get:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_1'
-          description: 成功
-      summary: 获取抽签详情
-      tags:
-      - 抽签
-      x-apifox-folder: 抽签
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-83655105-run
-    patch:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object'
-        content:
-          application/json:
-            schema:
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                status:
-                  description: 1未发布2抽签中3已完成
-                  maximum: 3
-                  minimum: 1
-                  type: integer
-              required:
-              - description
-              - name
-              - status
-              type: object
-              x-apifox-orders:
-              - 01H1MR4P8501BFWF2RTSTWBC0Q
-              x-apifox-refs:
-                "01H1MR4P8501BFWF2RTSTWBC0Q":
-                  $ref: '#/components/schemas/PoolBase'
-              x-apifox-ignore-properties:
-              - name
-              - description
-              - status
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_1'
-          description: 成功
-      summary: 修改抽签信息
-      tags:
-      - 抽签
-      x-apifox-folder: 抽签
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-83655712-run
-  /pool:
-    post:
-      deprecated: false
-      parameters: []
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_1'
-        content:
-          application/json:
-            schema:
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                type:
-                  description: 1抽奖2分组3角色分组4抽签
-                  maximum: 4
-                  minimum: 1
-                  type: integer
-              required:
-              - description
-              - name
-              - type
-              type: object
-              x-apifox-orders:
-              - 01H13PGPFKMS9YVYKRE8J593X7
-              x-apifox-refs:
-                "01H13PGPFKMS9YVYKRE8J593X7":
-                  $ref: '#/components/schemas/PoolBase'
-              x-apifox-ignore-properties:
-              - name
-              - description
-              - type
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_3'
-          description: 成功
-      summary: 创建抽签
-      tags:
-      - 抽签
-      x-apifox-folder: 抽签
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-83655682-run
-  /select/{poolID}:
-    post:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: poolID
-        required: true
-        schema:
-          type: integer
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_2'
-        content:
-          application/json:
-            schema:
-              properties:
-                name:
-                  type: string
-                roleID:
-                  type: integer
-                identify:
-                  type: string
-              required:
-              - identify
-              - name
-              type: object
-              x-apifox-orders:
-              - name
-              - roleID
-              - identify
-              x-apifox-ignore-properties: []
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_4'
-          description: 成功
-      summary: 抽取
-      tags: []
-      x-apifox-folder: ""
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-83655733-run
-  /result/{poolID}:
-    get:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: poolID
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_5'
-          description: 成功
-      summary: 抽取结果
-      tags: []
-      x-apifox-folder: ""
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-83655756-run
-  /:
-    get:
-      deprecated: false
-      parameters: []
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_6'
-          description: 成功
-      summary: 后端状态
-      tags: []
-      x-apifox-folder: ""
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-85193489-run
-  /pool/{id}/roles:
-    get:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_7'
-          description: 成功
-      summary: 获取角色列表
-      tags:
-      - 分角色用/角色
-      x-apifox-folder: 分角色用/角色
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-85193499-run
-    post:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_3'
-        content:
-          application/json:
-            schema:
-              properties:
-                roleName:
-                  type: string
-              required:
-              - roleName
-              type: object
-              x-apifox-orders:
-              - roleName
-              x-apifox-ignore-properties: []
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_7'
-          description: 成功
-      summary: 创建角色
-      tags:
-      - 分角色用/角色
-      x-apifox-folder: 分角色用/角色
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-85193498-run
-  /pool/{id}/roles/{roleID}:
-    delete:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      - explode: false
-        in: path
-        name: roleID
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_7'
-          description: 成功
-      summary: 删除角色
-      tags:
-      - 分角色用/角色
-      x-apifox-folder: 分角色用/角色
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-85193500-run
-    patch:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      - explode: false
-        in: path
-        name: roleID
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_4'
-        content:
-          application/json:
-            schema:
-              properties:
-                name:
-                  type: string
-              required:
-              - name
-              type: object
-              x-apifox-orders:
-              - 01H1Y9N0NFGF41WW77372RE6TK
-              x-apifox-refs:
-                "01H1Y9N0NFGF41WW77372RE6TK":
-                  $ref: '#/components/schemas/GroupRole'
-              x-apifox-ignore-properties:
-              - name
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_7'
-          description: 成功
-      summary: 修改角色
-      tags:
-      - 分角色用/角色
-      x-apifox-folder: 分角色用/角色
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-85193501-run
-  /pool/{id}/groups:
-    get:
-      deprecated: true
-      description: |
-        目前来看大概率用不到
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_8'
-          description: 成功
-      summary: 获取分组列表
-      tags:
-      - 分角色用/组
-      x-apifox-folder: 分角色用/组
-      x-apifox-status: deprecated
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-86460686-run
-    post:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_5'
-        content:
-          application/json:
-            schema:
-              properties:
-                groupName:
-                  type: string
-              required:
-              - groupName
-              type: object
-              x-apifox-orders:
-              - groupName
-              x-apifox-ignore-properties: []
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_8'
-          description: 成功
-      summary: 创建分组
-      tags:
-      - 分角色用/组
-      x-apifox-folder: 分角色用/组
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-86460685-run
-  /pool/{id}/groups/{groupID}:
-    delete:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      - explode: false
-        in: path
-        name: groupID
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_8'
-          description: 成功
-      summary: 删除分组
-      tags:
-      - 分角色用/组
-      x-apifox-folder: 分角色用/组
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-86460687-run
-    patch:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      - explode: false
-        in: path
-        name: groupID
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_6'
-        content:
-          application/json:
-            schema:
-              properties:
-                name:
-                  type: string
-              required:
-              - name
-              type: object
-              x-apifox-orders:
-              - 01H1Y9N0NFGF41WW77372RE6TK
-              x-apifox-refs:
-                "01H1Y9N0NFGF41WW77372RE6TK":
-                  $ref: '#/components/schemas/GroupRole'
-              x-apifox-ignore-properties:
-              - name
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_8'
-          description: 成功
-      summary: 修改分组
-      tags:
-      - 分角色用/组
-      x-apifox-folder: 分角色用/组
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-86460688-run
-  /pool/{id}/selections:
-    get:
-      deprecated: true
-      description: 目前来看似乎用不到
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_9'
-          description: 成功
-      summary: 获取签列表
-      tags:
-      - 签
-      x-apifox-folder: 签
-      x-apifox-status: deprecated
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-86460691-run
-    post:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_7'
-        content:
-          application/json:
-            schema:
-              properties:
-                number:
-                  type: integer
-                name:
-                  type: string
-                groupID:
-                  type: integer
-                roleID:
-                  type: integer
-              required:
-              - number
-              type: object
-              x-apifox-orders:
-              - 01H240N836GXCYJAVAC5GEYG3G
-              x-apifox-refs:
-                "01H240N836GXCYJAVAC5GEYG3G":
-                  $ref: '#/components/schemas/Selection'
-                  x-apifox-overrides: {}
-              x-apifox-ignore-properties:
-              - number
-              - name
-              - groupID
-              - roleID
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_9'
-          description: 成功
-      summary: 创建签
-      tags:
-      - 签
-      x-apifox-folder: 签
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-86460690-run
-  /pool/{id}/selections/{selectionID}:
-    delete:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      - explode: false
-        in: path
-        name: selectionID
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_9'
-          description: 成功
-      summary: 删除签
-      tags:
-      - 签
-      x-apifox-folder: 签
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-86460692-run
-    patch:
-      deprecated: false
-      parameters:
-      - explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-        style: simple
-      - explode: false
-        in: path
-        name: selectionID
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/inline_object_8'
-        content:
-          application/json:
-            schema:
-              properties:
-                id:
-                  maximum: 2
-                  minimum: 1
-                  type: integer
-                number:
-                  type: integer
-                name:
-                  type: string
-                groupID:
-                  type: integer
-                roleID:
-                  type: integer
-              required:
-              - id
-              - number
-              type: object
-              x-apifox-orders:
-              - 01H240TND6PSRVPVH4NWD2T50T
-              x-apifox-refs:
-                "01H240TND6PSRVPVH4NWD2T50T":
-                  $ref: '#/components/schemas/Selection'
-                  x-apifox-overrides: {}
-              x-apifox-ignore-properties:
-              - id
-              - number
-              - name
-              - groupID
-              - roleID
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_9'
-          description: 成功
-      summary: 修改签
-      tags:
-      - 签
-      x-apifox-folder: 签
-      x-apifox-status: developing
-      x-run-in-apifox: https://apifox.com/web/project/2768148/apis/api-86460693-run
-components:
-  requestBodies:
-    inline_object_1:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_1'
-    inline_object:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object'
-    inline_object_8:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_8'
-    inline_object_7:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_7'
-    inline_object_6:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_6'
-    inline_object_5:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_5'
-    inline_object_4:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_4'
-    inline_object_3:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_3'
-    inline_object_2:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object_2'
-  schemas:
-    Result:
-      properties:
-        id:
-          minimum: 1
-          type: integer
-        name:
-          type: string
-        identify:
-          type: string
-        selection:
-          $ref: '#/components/schemas/inline_response_200_4_data_selection'
-      required:
-      - id
-      - identify
-      - name
-      - selection
-      type: object
-      x-apifox-orders:
-      - id
-      - name
-      - identify
-      - selection
-      x-apifox-ignore-properties: []
-      x-apifox-folder: ""
-    GroupRole:
-      properties:
-        id:
-          maximum: 2
-          minimum: 1
-          type: integer
-        name:
-          type: string
-      required:
-      - id
-      - name
-      type: object
-      x-apifox-orders:
-      - id
-      - name
-      x-apifox-ignore-properties: []
-      x-apifox-folder: ""
-    Selection:
-      properties:
-        id:
-          maximum: 2
-          minimum: 1
-          type: integer
-        number:
-          type: integer
-        name:
-          type: string
-        groupID:
-          type: integer
-        roleID:
-          type: integer
-      required:
-      - id
-      - number
-      type: object
-      x-apifox-orders:
-      - id
-      - number
-      - name
-      - groupID
-      - roleID
-      x-apifox-ignore-properties: []
-      x-apifox-folder: ""
-    Pool:
-      properties:
-        id:
-          minimum: 1
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          description: 1抽奖2分组3角色分组4抽签
-          maximum: 4
-          minimum: 1
-          type: integer
-        status:
-          description: 1未发布2抽签中3已完成
-          maximum: 3
-          minimum: 1
-          type: integer
-        selections:
-          items:
-            $ref: '#/components/schemas/inline_response_200_1_data_selections'
-          type: array
-        groups:
-          items:
-            $ref: '#/components/schemas/inline_response_200_1_data_groups'
-          type: array
-        roles:
-          items:
-            $ref: '#/components/schemas/inline_response_200_1_data_groups'
-          type: array
-      required:
-      - description
-      - id
-      - name
-      - selections
-      - status
-      - type
-      type: object
-      x-apifox-orders:
-      - 01H127A2QBAVC41NAB8RBPDK2S
-      - selections
-      - groups
-      - roles
-      x-apifox-refs:
-        "01H127A2QBAVC41NAB8RBPDK2S":
-          $ref: '#/components/schemas/PoolBase'
-      x-apifox-ignore-properties:
-      - id
-      - name
-      - description
-      - type
-      - status
-      x-apifox-folder: ""
-    PoolBase:
-      properties:
-        id:
-          minimum: 1
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          description: 1抽奖2分组3角色分组4抽签
-          maximum: 4
-          minimum: 1
-          type: integer
-        status:
-          description: 1未发布2抽签中3已完成
-          maximum: 3
-          minimum: 1
-          type: integer
-      required:
-      - description
-      - id
-      - name
-      - status
-      - type
-      type: object
-      x-apifox-orders:
-      - id
-      - name
-      - description
-      - type
-      - status
-      x-apifox-ignore-properties: []
-      x-apifox-folder: ""
-    inline_response_200_data:
-      example:
-        name: name
-        description: description
-        id: 1
-        type: 1
-        status: 2
-      properties:
-        id:
-          minimum: 1
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          description: 1抽奖2分组3角色分组4抽签
-          maximum: 4
-          minimum: 1
-          type: integer
-        status:
-          description: 1未发布2抽签中3已完成
-          maximum: 3
-          minimum: 1
-          type: integer
-      required:
-      - description
-      - id
-      - name
-      - status
-      - type
-    inline_response_200:
-      example:
-        msg: msg
-        code: 0
-        data:
-        - name: name
-          description: description
-          id: 1
-          type: 1
-          status: 2
-        - name: name
-          description: description
-          id: 1
-          type: 1
-          status: 2
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
-        data:
-          items:
-            $ref: '#/components/schemas/inline_response_200_data'
-          type: array
-      required:
-      - code
-      - data
-      - msg
-    inline_response_200_1_data_selections:
-      example:
-        number: 2
-        roleID: 9
-        groupID: 7
-        name: name
-        id: 1
-      properties:
-        id:
-          maximum: 2
-          minimum: 1
-          type: integer
-        number:
-          type: integer
-        name:
-          type: string
-        groupID:
-          type: integer
-        roleID:
-          type: integer
-      required:
-      - id
-      - number
-    inline_response_200_1_data_groups:
-      example:
-        name: name
-        id: 1
-      properties:
-        id:
-          maximum: 2
-          minimum: 1
-          type: integer
-        name:
-          type: string
-      required:
-      - id
-      - name
-    inline_response_200_1_data:
-      example:
-        selections:
-        - number: 2
-          roleID: 9
-          groupID: 7
-          name: name
-          id: 1
-        - number: 2
-          roleID: 9
-          groupID: 7
-          name: name
-          id: 1
-        roles:
-        - name: name
-          id: 1
-        - name: name
-          id: 1
-        name: name
-        description: description
-        groups:
-        - name: name
-          id: 1
-        - name: name
-          id: 1
-        id: 1
-        type: 1
-        status: 2
-      properties:
-        id:
-          minimum: 1
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          description: 1抽奖2分组3角色分组4抽签
-          maximum: 4
-          minimum: 1
-          type: integer
-        status:
-          description: 1未发布2抽签中3已完成
-          maximum: 3
-          minimum: 1
-          type: integer
-        selections:
-          items:
-            $ref: '#/components/schemas/inline_response_200_1_data_selections'
-          type: array
-        groups:
-          items:
-            $ref: '#/components/schemas/inline_response_200_1_data_groups'
-          type: array
-        roles:
-          items:
-            $ref: '#/components/schemas/inline_response_200_1_data_groups'
-          type: array
-      required:
-      - description
-      - id
-      - name
-      - selections
-      - status
-      - type
-    inline_response_200_1:
-      example:
-        msg: msg
-        code: 0
-        data:
-          selections:
-          - number: 2
-            roleID: 9
-            groupID: 7
-            name: name
-            id: 1
-          - number: 2
-            roleID: 9
-            groupID: 7
-            name: name
-            id: 1
-          roles:
-          - name: name
-            id: 1
-          - name: name
-            id: 1
-          name: name
-          description: description
-          groups:
-          - name: name
-            id: 1
-          - name: name
-            id: 1
-          id: 1
-          type: 1
-          status: 2
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
-        data:
-          $ref: '#/components/schemas/inline_response_200_1_data'
-      required:
-      - code
-      - data
-      - msg
-    inline_response_200_2:
-      example:
-        msg: msg
-        code: 0
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
-      required:
-      - code
-      - msg
-    inline_object:
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        status:
-          description: 1未发布2抽签中3已完成
-          maximum: 3
-          minimum: 1
-          type: integer
-      required:
-      - description
-      - name
-      - status
-      type: object
-      x-apifox-orders:
-      - 01H1MR4P8501BFWF2RTSTWBC0Q
-      x-apifox-refs:
-        "01H1MR4P8501BFWF2RTSTWBC0Q":
-          $ref: '#/components/schemas/PoolBase'
-      x-apifox-ignore-properties:
-      - name
-      - description
-      - status
-    inline_object_1:
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          description: 1抽奖2分组3角色分组4抽签
-          maximum: 4
-          minimum: 1
-          type: integer
-      required:
-      - description
-      - name
-      - type
-      type: object
-      x-apifox-orders:
-      - 01H13PGPFKMS9YVYKRE8J593X7
-      x-apifox-refs:
-        "01H13PGPFKMS9YVYKRE8J593X7":
-          $ref: '#/components/schemas/PoolBase'
-      x-apifox-ignore-properties:
-      - name
-      - description
-      - type
-    inline_response_200_3_data:
-      example:
-        id: 1
-      properties:
-        id:
-          minimum: 1
-          type: integer
-      required:
-      - id
-    inline_response_200_3:
-      example:
-        msg: msg
-        code: 0
-        data:
-          id: 1
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
-        data:
-          $ref: '#/components/schemas/inline_response_200_3_data'
-      required:
-      - code
-      - data
-      - msg
-    inline_object_2:
-      properties:
-        name:
-          type: string
-        roleID:
-          type: integer
-        identify:
-          type: string
-      required:
-      - identify
-      - name
-      type: object
-      x-apifox-orders:
-      - name
-      - roleID
-      - identify
-      x-apifox-ignore-properties: []
-    inline_response_200_4_data_selection:
-      example:
-        roleID: 5
-        groupID: 1
-        name: name
-        id: 1
-      properties:
-        id:
-          maximum: 2
-          minimum: 1
-          type: integer
-        name:
-          type: string
-        groupID:
-          type: integer
-        roleID:
-          type: integer
-      required:
-      - id
-    inline_response_200_4_data:
-      example:
-        identify: identify
-        selection:
-          roleID: 5
-          groupID: 1
-          name: name
-          id: 1
-        name: name
-      properties:
-        name:
-          type: string
-        identify:
-          type: string
-        selection:
-          $ref: '#/components/schemas/inline_response_200_4_data_selection'
-      required:
-      - identify
-      - name
-      - selection
-    inline_response_200_4:
-      example:
-        msg: msg
-        code: 0
-        data:
-          identify: identify
-          selection:
-            roleID: 5
-            groupID: 1
-            name: name
-            id: 1
-          name: name
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
-        data:
-          $ref: '#/components/schemas/inline_response_200_4_data'
-      required:
-      - code
-      - data
-      - msg
-    inline_response_200_5_data:
-      example:
-        identify: identify
-        selection:
-          roleID: 5
-          groupID: 1
-          name: name
-          id: 1
-        name: name
-        id: 1
-      properties:
-        id:
-          minimum: 1
-          type: integer
-        name:
-          type: string
-        identify:
-          type: string
-        selection:
-          $ref: '#/components/schemas/inline_response_200_4_data_selection'
-      required:
-      - id
-      - identify
-      - name
-      - selection
-    inline_response_200_5:
-      example:
-        msg: msg
-        code: 0
-        data:
-        - identify: identify
-          selection:
-            roleID: 5
-            groupID: 1
-            name: name
-            id: 1
-          name: name
-          id: 1
-        - identify: identify
-          selection:
-            roleID: 5
-            groupID: 1
-            name: name
-            id: 1
-          name: name
-          id: 1
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
-        data:
-          items:
-            $ref: '#/components/schemas/inline_response_200_5_data'
-          type: array
-      required:
-      - code
-      - data
-      - msg
-    inline_response_200_6:
-      example:
-        msg: msg
-        code: code
-      properties:
-        code:
-          type: string
-        msg:
-          type: string
-      required:
-      - code
-      - msg
-    inline_response_200_7_data:
-      example:
-        roles:
-        - name: name
-          id: 1
-        - name: name
-          id: 1
-      properties:
-        roles:
-          items:
-            $ref: '#/components/schemas/inline_response_200_1_data_groups'
-          type: array
-      required:
-      - roles
-    inline_response_200_7:
-      example:
-        msg: msg
-        code: 0
-        data:
-          roles:
-          - name: name
-            id: 1
-          - name: name
-            id: 1
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
-        data:
-          $ref: '#/components/schemas/inline_response_200_7_data'
-      required:
-      - code
-      - data
-      - msg
-    inline_object_3:
-      properties:
-        roleName:
-          type: string
-      required:
-      - roleName
-      type: object
-      x-apifox-orders:
-      - roleName
-      x-apifox-ignore-properties: []
-    inline_object_4:
-      properties:
-        name:
-          type: string
-      required:
-      - name
-      type: object
-      x-apifox-orders:
-      - 01H1Y9N0NFGF41WW77372RE6TK
-      x-apifox-refs:
-        "01H1Y9N0NFGF41WW77372RE6TK":
-          $ref: '#/components/schemas/GroupRole'
-      x-apifox-ignore-properties:
-      - name
-    inline_response_200_8_data:
-      example:
-        groups:
-        - name: name
-          id: 1
-        - name: name
-          id: 1
-      properties:
-        groups:
-          items:
-            $ref: '#/components/schemas/inline_response_200_1_data_groups'
-          type: array
-      required:
-      - groups
-    inline_response_200_8:
-      example:
-        msg: msg
-        code: 0
-        data:
-          groups:
-          - name: name
-            id: 1
-          - name: name
-            id: 1
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
-        data:
-          $ref: '#/components/schemas/inline_response_200_8_data'
-      required:
-      - code
-      - data
-      - msg
-    inline_object_5:
-      properties:
-        groupName:
-          type: string
-      required:
-      - groupName
-      type: object
-      x-apifox-orders:
-      - groupName
-      x-apifox-ignore-properties: []
-    inline_object_6:
-      properties:
-        name:
-          type: string
-      required:
-      - name
-      type: object
-      x-apifox-orders:
-      - 01H1Y9N0NFGF41WW77372RE6TK
-      x-apifox-refs:
-        "01H1Y9N0NFGF41WW77372RE6TK":
-          $ref: '#/components/schemas/GroupRole'
-      x-apifox-ignore-properties:
-      - name
-    inline_response_200_9_data:
-      example:
-        selections:
-        - number: 2
-          roleID: 9
-          groupID: 7
-          name: name
-          id: 1
-        - number: 2
-          roleID: 9
-          groupID: 7
-          name: name
-          id: 1
-      properties:
-        selections:
-          items:
-            $ref: '#/components/schemas/inline_response_200_1_data_selections'
-          type: array
-      required:
-      - selections
-    inline_response_200_9:
-      example:
-        msg: msg
-        code: 0
-        data:
-          selections:
-          - number: 2
-            roleID: 9
-            groupID: 7
-            name: name
-            id: 1
-          - number: 2
-            roleID: 9
-            groupID: 7
-            name: name
-            id: 1
-      properties:
-        code:
-          type: integer
-        msg:
-          type: string
-        data:
-          $ref: '#/components/schemas/inline_response_200_9_data'
-      required:
-      - code
-      - data
-      - msg
-    inline_object_7:
-      properties:
-        number:
-          type: integer
-        name:
-          type: string
-        groupID:
-          type: integer
-        roleID:
-          type: integer
-      required:
-      - number
-      type: object
-      x-apifox-orders:
-      - 01H240N836GXCYJAVAC5GEYG3G
-      x-apifox-refs:
-        "01H240N836GXCYJAVAC5GEYG3G":
-          $ref: '#/components/schemas/Selection'
-          x-apifox-overrides: {}
-      x-apifox-ignore-properties:
-      - number
-      - name
-      - groupID
-      - roleID
-    inline_object_8:
-      properties:
-        id:
-          maximum: 2
-          minimum: 1
-          type: integer
-        number:
-          type: integer
-        name:
-          type: string
-        groupID:
-          type: integer
-        roleID:
-          type: integer
-      required:
-      - id
-      - number
-      type: object
-      x-apifox-orders:
-      - 01H240TND6PSRVPVH4NWD2T50T
-      x-apifox-refs:
-        "01H240TND6PSRVPVH4NWD2T50T":
-          $ref: '#/components/schemas/Selection'
-          x-apifox-overrides: {}
-      x-apifox-ignore-properties:
-      - id
-      - number
-      - name
-      - groupID
-      - roleID
+{
+  "openapi": "3.1.0",
+  "info": { "title": "抽签", "description": "", "version": "1.0.0" },
+  "tags":
+    [
+      { "name": "抽签" },
+      { "name": "签" },
+      { "name": "分角色用" },
+      { "name": "分角色用/组" },
+      { "name": "分角色用/角色" },
+    ],
+  "paths":
+    {
+      "/pools":
+        {
+          "get":
+            {
+              "summary": "获取抽签列表",
+              "x-apifox-folder": "抽签",
+              "x-apifox-status": "testing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["抽签"],
+              "parameters": [],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 0,
+                                        },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "array",
+                                          "items":
+                                            {
+                                              "type": "object",
+                                              "properties":
+                                                {
+                                                  "id":
+                                                    {
+                                                      "type": "integer",
+                                                      "minimum": 1,
+                                                    },
+                                                  "name": { "type": "string" },
+                                                  "description":
+                                                    { "type": "string" },
+                                                  "type":
+                                                    {
+                                                      "type": "integer",
+                                                      "minimum": 1,
+                                                      "maximum": 4,
+                                                      "description": "1抽奖2分组3角色分组4抽签",
+                                                    },
+                                                  "status":
+                                                    {
+                                                      "type": "integer",
+                                                      "minimum": 1,
+                                                      "maximum": 3,
+                                                      "description": "1未发布2抽签中3已完成",
+                                                    },
+                                                },
+                                              "x-apifox-orders":
+                                                ["01H124RWE099JVKTD64XZ4DF7K"],
+                                              "x-apifox-refs":
+                                                {
+                                                  "01H124RWE099JVKTD64XZ4DF7K":
+                                                    {
+                                                      "$ref": "#/components/schemas/pool-base",
+                                                    },
+                                                },
+                                              "required":
+                                                [
+                                                  "id",
+                                                  "name",
+                                                  "description",
+                                                  "type",
+                                                  "status",
+                                                ],
+                                              "x-apifox-ignore-properties":
+                                                [
+                                                  "id",
+                                                  "name",
+                                                  "description",
+                                                  "type",
+                                                  "status",
+                                                ],
+                                            },
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                              "examples":
+                                {
+                                  "1":
+                                    {
+                                      "summary": "成功示例",
+                                      "value":
+                                        {
+                                          "code": 0,
+                                          "data":
+                                            [
+                                              {
+                                                "id": 1,
+                                                "name": "抽奖",
+                                                "description": "抽奖测试1",
+                                                "type": 1,
+                                                "status": 1,
+                                              },
+                                              {
+                                                "id": 2,
+                                                "name": "抽奖2",
+                                                "description": "抽奖测试2",
+                                                "type": 2,
+                                                "status": 1,
+                                              },
+                                            ],
+                                          "msg": "success",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-83655075-run",
+            },
+        },
+      "/pool/{id}":
+        {
+          "get":
+            {
+              "summary": "获取抽签详情",
+              "x-apifox-folder": "抽签",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["抽签"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "id":
+                                                {
+                                                  "type": "integer",
+                                                  "minimum": 1,
+                                                },
+                                              "name": { "type": "string" },
+                                              "description":
+                                                { "type": "string" },
+                                              "type":
+                                                {
+                                                  "type": "integer",
+                                                  "minimum": 1,
+                                                  "maximum": 4,
+                                                  "description": "1抽奖2分组3角色分组4抽签",
+                                                },
+                                              "status":
+                                                {
+                                                  "type": "integer",
+                                                  "minimum": 1,
+                                                  "maximum": 3,
+                                                  "description": "1未发布2抽签中3已完成",
+                                                },
+                                              "selections":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "number":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                          "groupID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "roleID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H127TG7X87ZWDC9KZC94RRX3",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H127TG7X87ZWDC9KZC94RRX3"
+                                                          : {
+                                                              "$ref": "#/components/schemas/selection",
+                                                              ? "x-apifox-overrides"
+                                                              : {
+                                                                  "number": null,
+                                                                },
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "number"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : [
+                                                          "id",
+                                                          "number",
+                                                          "name",
+                                                          "groupID",
+                                                          "roleID",
+                                                        ],
+                                                    },
+                                                },
+                                              "groups":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H13NZND448W6A3EFE877ZWVD",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H13NZND448W6A3EFE877ZWVD"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "name"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                              "roles":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H23ZPG6ZMG7NDSWG2P784EXR",
+                                                        ],
+                                                      "required":
+                                                        ["id", "name"],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H23ZPG6ZMG7NDSWG2P784EXR"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders":
+                                            ["01H127W9BQR20AZZ2TRKPZK622"],
+                                          "x-apifox-refs":
+                                            {
+                                              "01H127W9BQR20AZZ2TRKPZK622":
+                                                {
+                                                  "$ref": "#/components/schemas/pool",
+                                                },
+                                            },
+                                          "required":
+                                            [
+                                              "id",
+                                              "name",
+                                              "description",
+                                              "type",
+                                              "status",
+                                              "selections",
+                                            ],
+                                          "x-apifox-ignore-properties":
+                                            [
+                                              "id",
+                                              "name",
+                                              "description",
+                                              "type",
+                                              "status",
+                                              "selections",
+                                              "groups",
+                                              "roles",
+                                            ],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-83655105-run",
+            },
+          "delete":
+            {
+              "summary": "删除抽签",
+              "x-apifox-folder": "抽签",
+              "x-apifox-status": "testing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["抽签"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 0,
+                                        },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                    },
+                                  "required": ["code", "msg"],
+                                  "x-apifox-orders": ["code", "msg"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                              "examples":
+                                {
+                                  "1":
+                                    {
+                                      "summary": "成功示例",
+                                      "value": { "code": 0, "msg": "success" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-83655663-run",
+            },
+          "patch":
+            {
+              "summary": "修改抽签信息",
+              "x-apifox-folder": "抽签",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["抽签"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties":
+                                {
+                                  "name": { "type": "string" },
+                                  "description": { "type": "string" },
+                                  "status":
+                                    {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 3,
+                                      "description": "1未发布2抽签中3已完成",
+                                    },
+                                },
+                              "x-apifox-orders": ["01H1MR4P8501BFWF2RTSTWBC0Q"],
+                              "x-apifox-refs":
+                                {
+                                  "01H1MR4P8501BFWF2RTSTWBC0Q":
+                                    {
+                                      "$ref": "#/components/schemas/pool-base",
+                                    },
+                                },
+                              "required": ["name", "description", "status"],
+                              "x-apifox-ignore-properties":
+                                ["name", "description", "status"],
+                            },
+                        },
+                    },
+                },
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "id":
+                                                {
+                                                  "type": "integer",
+                                                  "minimum": 1,
+                                                },
+                                              "name": { "type": "string" },
+                                              "description":
+                                                { "type": "string" },
+                                              "type":
+                                                {
+                                                  "type": "integer",
+                                                  "minimum": 1,
+                                                  "maximum": 4,
+                                                  "description": "1抽奖2分组3角色分组4抽签",
+                                                },
+                                              "status":
+                                                {
+                                                  "type": "integer",
+                                                  "minimum": 1,
+                                                  "maximum": 3,
+                                                  "description": "1未发布2抽签中3已完成",
+                                                },
+                                              "selections":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "number":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                          "groupID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "roleID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H127TG7X87ZWDC9KZC94RRX3",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H127TG7X87ZWDC9KZC94RRX3"
+                                                          : {
+                                                              "$ref": "#/components/schemas/selection",
+                                                              ? "x-apifox-overrides"
+                                                              : {
+                                                                  "number": null,
+                                                                },
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "number"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : [
+                                                          "id",
+                                                          "number",
+                                                          "name",
+                                                          "groupID",
+                                                          "roleID",
+                                                        ],
+                                                    },
+                                                },
+                                              "groups":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H13NZND448W6A3EFE877ZWVD",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H13NZND448W6A3EFE877ZWVD"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "name"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                              "roles":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H23ZPG6ZMG7NDSWG2P784EXR",
+                                                        ],
+                                                      "required":
+                                                        ["id", "name"],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H23ZPG6ZMG7NDSWG2P784EXR"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders":
+                                            ["01H1MRB582R01CVKBXVEYB4E42"],
+                                          "x-apifox-refs":
+                                            {
+                                              "01H1MRB582R01CVKBXVEYB4E42":
+                                                {
+                                                  "$ref": "#/components/schemas/pool",
+                                                },
+                                            },
+                                          "required":
+                                            [
+                                              "id",
+                                              "name",
+                                              "description",
+                                              "type",
+                                              "status",
+                                              "selections",
+                                            ],
+                                          "x-apifox-ignore-properties":
+                                            [
+                                              "id",
+                                              "name",
+                                              "description",
+                                              "type",
+                                              "status",
+                                              "selections",
+                                              "groups",
+                                              "roles",
+                                            ],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-83655712-run",
+            },
+        },
+      "/pool":
+        {
+          "post":
+            {
+              "summary": "创建抽签",
+              "x-apifox-folder": "抽签",
+              "x-apifox-status": "testing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["抽签"],
+              "parameters": [],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties":
+                                {
+                                  "name": { "type": "string" },
+                                  "description": { "type": "string" },
+                                  "type":
+                                    {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "maximum": 4,
+                                      "description": "1抽奖2分组3角色分组4抽签",
+                                    },
+                                },
+                              "x-apifox-orders": ["01H13PGPFKMS9YVYKRE8J593X7"],
+                              "x-apifox-refs":
+                                {
+                                  "01H13PGPFKMS9YVYKRE8J593X7":
+                                    {
+                                      "$ref": "#/components/schemas/pool-base",
+                                    },
+                                },
+                              "required": ["name", "description", "type"],
+                              "x-apifox-ignore-properties":
+                                ["name", "description", "type"],
+                            },
+                        },
+                    },
+                },
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 0,
+                                        },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "id":
+                                                {
+                                                  "type": "integer",
+                                                  "minimum": 1,
+                                                },
+                                            },
+                                          "x-apifox-orders": ["id"],
+                                          "required": ["id"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                              "examples":
+                                {
+                                  "1":
+                                    {
+                                      "summary": "成功示例",
+                                      "value":
+                                        {
+                                          "code": 0,
+                                          "data": { "id": 9 },
+                                          "msg": "success",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-83655682-run",
+            },
+        },
+      "/pool/{poolID}/select":
+        {
+          "post":
+            {
+              "summary": "抽取",
+              "x-apifox-folder": "抽签",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["抽签"],
+              "parameters":
+                [
+                  {
+                    "name": "poolID",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties":
+                                {
+                                  "name": { "type": "string" },
+                                  "roleID": { "type": "integer" },
+                                  "identify": { "type": "string" },
+                                },
+                              "x-apifox-orders": ["name", "roleID", "identify"],
+                              "required": ["name", "identify"],
+                              "x-apifox-ignore-properties": [],
+                            },
+                        },
+                    },
+                },
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "name": { "type": "string" },
+                                              "identify": { "type": "string" },
+                                              "selection":
+                                                {
+                                                  "type": "object",
+                                                  "properties":
+                                                    {
+                                                      "id":
+                                                        {
+                                                          "type": "integer",
+                                                          "minimum": 1,
+                                                          "maximum": 2,
+                                                        },
+                                                      "name":
+                                                        { "type": "string" },
+                                                      "groupName":
+                                                        { "type": "string" },
+                                                      "roleName":
+                                                        { "type": "string" },
+                                                    },
+                                                  "x-apifox-orders":
+                                                    [
+                                                      "id",
+                                                      "name",
+                                                      "groupName",
+                                                      "roleName",
+                                                    ],
+                                                  "x-apifox-refs": {},
+                                                  "required": ["id"],
+                                                  "x-apifox-ignore-properties":
+                                                    [],
+                                                },
+                                            },
+                                          "x-apifox-orders":
+                                            ["name", "identify", "selection"],
+                                          "x-apifox-refs": {},
+                                          "required":
+                                            ["name", "selection", "identify"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-83655733-run",
+            },
+        },
+      "/pool/{ID}/results":
+        {
+          "get":
+            {
+              "summary": "抽取结果",
+              "x-apifox-folder": "抽签",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["抽签"],
+              "parameters":
+                [
+                  {
+                    "name": "ID",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "string" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "array",
+                                          "items":
+                                            {
+                                              "type": "object",
+                                              "properties":
+                                                {
+                                                  "id": { "type": "integer" },
+                                                  "name": { "type": "string" },
+                                                  "results":
+                                                    {
+                                                      "type": "array",
+                                                      "items":
+                                                        {
+                                                          "type": "object",
+                                                          "properties":
+                                                            {
+                                                              "id":
+                                                                {
+                                                                  "type": "integer",
+                                                                  "minimum": 1,
+                                                                },
+                                                              "name":
+                                                                {
+                                                                  "type": "string",
+                                                                },
+                                                              "identify":
+                                                                {
+                                                                  "type": "string",
+                                                                },
+                                                            },
+                                                          "x-apifox-orders":
+                                                            [
+                                                              "01H25ZSH93RRSHQMS9C3RXZ2HN",
+                                                            ],
+                                                          "x-apifox-refs":
+                                                            {
+                                                              ? "01H25ZSH93RRSHQMS9C3RXZ2HN"
+                                                              : {
+                                                                  "$ref": "#/components/schemas/result",
+                                                                  ? "x-apifox-overrides"
+                                                                  : {
+                                                                      "selection": null,
+                                                                    },
+                                                                },
+                                                            },
+                                                          "required":
+                                                            [
+                                                              "id",
+                                                              "name",
+                                                              "identify",
+                                                            ],
+                                                          ? "x-apifox-ignore-properties"
+                                                          : [
+                                                              "id",
+                                                              "name",
+                                                              "identify",
+                                                            ],
+                                                        },
+                                                    },
+                                                },
+                                              "x-apifox-orders":
+                                                [
+                                                  "01H25ZQF2DR0C1FM95N33T6S5C",
+                                                  "results",
+                                                ],
+                                              "x-apifox-refs":
+                                                {
+                                                  "01H25ZQF2DR0C1FM95N33T6S5C":
+                                                    {
+                                                      "$ref": "#/components/schemas/selection",
+                                                      "x-apifox-overrides":
+                                                        { "number": null },
+                                                    },
+                                                },
+                                              "required": ["results", "id"],
+                                              "x-apifox-ignore-properties":
+                                                ["id", "name"],
+                                            },
+                                        },
+                                    },
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "x-apifox-refs": {},
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                  "x-200:分组成功":
+                    {
+                      "description": "分组成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "array",
+                                          "items":
+                                            {
+                                              "type": "object",
+                                              "properties":
+                                                {
+                                                  "id": { "type": "integer" },
+                                                  "groupName":
+                                                    { "type": "string" },
+                                                  "results":
+                                                    {
+                                                      "type": "array",
+                                                      "items":
+                                                        {
+                                                          "type": "object",
+                                                          "properties":
+                                                            {
+                                                              "id":
+                                                                {
+                                                                  "type": "integer",
+                                                                  "minimum": 1,
+                                                                },
+                                                              "name":
+                                                                {
+                                                                  "type": "string",
+                                                                },
+                                                              "identify":
+                                                                {
+                                                                  "type": "string",
+                                                                },
+                                                              "roleName":
+                                                                {
+                                                                  "type": "string",
+                                                                },
+                                                            },
+                                                          "x-apifox-orders":
+                                                            [
+                                                              "id",
+                                                              "name",
+                                                              "identify",
+                                                              "roleName",
+                                                            ],
+                                                          "required":
+                                                            [
+                                                              "name",
+                                                              "roleName",
+                                                              "identify",
+                                                              "id",
+                                                            ],
+                                                          "x-apifox-refs": {},
+                                                          ? "x-apifox-ignore-properties"
+                                                          : [],
+                                                        },
+                                                    },
+                                                },
+                                              "x-apifox-orders":
+                                                ["id", "groupName", "results"],
+                                              "required":
+                                                ["id", "groupName", "results"],
+                                              "x-apifox-ignore-properties": [],
+                                            },
+                                        },
+                                    },
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "x-apifox-refs": {},
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-83655756-run",
+            },
+        },
+      "/":
+        {
+          "get":
+            {
+              "summary": "后端状态",
+              "x-apifox-folder": "",
+              "x-apifox-status": "released",
+              "deprecated": false,
+              "description": "",
+              "tags": [],
+              "parameters": [],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 0,
+                                        },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "Ljcbaby's draw backend.",
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg"],
+                                  "required": ["code", "msg"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-85193489-run",
+            },
+        },
+      "/pool/{id}/roles":
+        {
+          "post":
+            {
+              "summary": "创建角色",
+              "x-apifox-folder": "分角色用/角色",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["分角色用/角色"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties": { "name": { "type": "string" } },
+                              "x-apifox-orders": ["name"],
+                              "required": ["name"],
+                              "x-apifox-ignore-properties": [],
+                            },
+                        },
+                    },
+                },
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "roles":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H1MS8MWVEAHD0838A3QTJYQ2",
+                                                        ],
+                                                      "required":
+                                                        ["id", "name"],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H1MS8MWVEAHD0838A3QTJYQ2"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["roles"],
+                                          "required": ["roles"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-85193498-run",
+            },
+          "get":
+            {
+              "summary": "获取角色列表",
+              "x-apifox-folder": "分角色用/角色",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["分角色用/角色"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "roles":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H1MSG7DZWTS67SEBREQEDBYS",
+                                                        ],
+                                                      "required":
+                                                        ["id", "name"],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H1MSG7DZWTS67SEBREQEDBYS"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["roles"],
+                                          "required": ["roles"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-85193499-run",
+            },
+        },
+      "/pool/{id}/roles/{roleID}":
+        {
+          "delete":
+            {
+              "summary": "删除角色",
+              "x-apifox-folder": "分角色用/角色",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["分角色用/角色"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                  {
+                    "name": "roleID",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "string" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "roles":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H1MSG7DZWTS67SEBREQEDBYS",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H1MSG7DZWTS67SEBREQEDBYS"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "name"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["roles"],
+                                          "required": ["roles"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-85193500-run",
+            },
+          "patch":
+            {
+              "summary": "修改角色",
+              "x-apifox-folder": "分角色用/角色",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["分角色用/角色"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                  {
+                    "name": "roleID",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "string" },
+                  },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties": { "name": { "type": "string" } },
+                              "x-apifox-orders": ["01H1Y9N0NFGF41WW77372RE6TK"],
+                              "x-apifox-refs":
+                                {
+                                  "01H1Y9N0NFGF41WW77372RE6TK":
+                                    {
+                                      "$ref": "#/components/schemas/group%2Frole",
+                                    },
+                                },
+                              "required": ["name"],
+                              "x-apifox-ignore-properties": ["name"],
+                            },
+                        },
+                    },
+                },
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "roles":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H1MSG7DZWTS67SEBREQEDBYS",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H1MSG7DZWTS67SEBREQEDBYS"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "name"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["roles"],
+                                          "required": ["roles"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-85193501-run",
+            },
+        },
+      "/pool/{id}/groups":
+        {
+          "post":
+            {
+              "summary": "创建分组",
+              "x-apifox-folder": "分角色用/组",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["分角色用/组"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties": { "name": { "type": "string" } },
+                              "x-apifox-orders": ["name"],
+                              "required": ["name"],
+                              "x-apifox-ignore-properties": [],
+                            },
+                        },
+                    },
+                },
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "groups":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H1MS8MWVEAHD0838A3QTJYQ2",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H1MS8MWVEAHD0838A3QTJYQ2"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "name"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["groups"],
+                                          "required": ["groups"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-86460685-run",
+            },
+          "get":
+            {
+              "summary": "获取分组列表",
+              "x-apifox-folder": "分角色用/组",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "目前来看大概率用不到\n",
+              "tags": ["分角色用/组"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "groups":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H1MSG7DZWTS67SEBREQEDBYS",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H1MSG7DZWTS67SEBREQEDBYS"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "name"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["groups"],
+                                          "required": ["groups"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-86460686-run",
+            },
+        },
+      "/pool/{id}/groups/{groupID}":
+        {
+          "delete":
+            {
+              "summary": "删除分组",
+              "x-apifox-folder": "分角色用/组",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["分角色用/组"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                  {
+                    "name": "groupID",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "string" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "groups":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H1MSG7DZWTS67SEBREQEDBYS",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H1MSG7DZWTS67SEBREQEDBYS"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "name"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["groups"],
+                                          "required": ["groups"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-86460687-run",
+            },
+          "patch":
+            {
+              "summary": "修改分组",
+              "x-apifox-folder": "分角色用/组",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["分角色用/组"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                  {
+                    "name": "groupID",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "string" },
+                  },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties": { "name": { "type": "string" } },
+                              "x-apifox-orders": ["01H1Y9N0NFGF41WW77372RE6TK"],
+                              "x-apifox-refs":
+                                {
+                                  "01H1Y9N0NFGF41WW77372RE6TK":
+                                    {
+                                      "$ref": "#/components/schemas/group%2Frole",
+                                    },
+                                },
+                              "required": ["name"],
+                              "x-apifox-ignore-properties": ["name"],
+                            },
+                        },
+                    },
+                },
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "groups":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                              "minimum": 1,
+                                                              "maximum": 2,
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H1MSG7DZWTS67SEBREQEDBYS",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H1MSG7DZWTS67SEBREQEDBYS"
+                                                          : {
+                                                              "$ref": "#/components/schemas/group%2Frole",
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "name"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : ["id", "name"],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["groups"],
+                                          "required": ["groups"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-86460688-run",
+            },
+        },
+      "/pool/{id}/selections":
+        {
+          "post":
+            {
+              "summary": "创建签",
+              "x-apifox-folder": "签",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["签"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties":
+                                {
+                                  "number": { "type": "integer" },
+                                  "name": { "type": "string" },
+                                  "groupID": { "type": "integer" },
+                                  "roleID": { "type": "integer" },
+                                },
+                              "x-apifox-orders": ["01H240N836GXCYJAVAC5GEYG3G"],
+                              "required": ["number"],
+                              "x-apifox-refs":
+                                {
+                                  "01H240N836GXCYJAVAC5GEYG3G":
+                                    {
+                                      "$ref": "#/components/schemas/selection",
+                                      "x-apifox-overrides": { "number": null },
+                                    },
+                                },
+                              "x-apifox-ignore-properties":
+                                ["number", "name", "groupID", "roleID"],
+                            },
+                        },
+                    },
+                },
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "selections":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "number":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                          "groupID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "roleID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H240P4T89M1CZABQTKA5VMK3",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H240P4T89M1CZABQTKA5VMK3"
+                                                          : {
+                                                              "$ref": "#/components/schemas/selection",
+                                                              ? "x-apifox-overrides"
+                                                              : {
+                                                                  "number": null,
+                                                                },
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "number"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : [
+                                                          "id",
+                                                          "number",
+                                                          "name",
+                                                          "groupID",
+                                                          "roleID",
+                                                        ],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["selections"],
+                                          "required": ["selections"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-86460690-run",
+            },
+          "get":
+            {
+              "summary": "获取签列表",
+              "x-apifox-folder": "签",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "目前来看似乎用不到",
+              "tags": ["签"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "selections":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "number":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                          "groupID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "roleID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H240QTW3VW8Z6KNRSNJF76K6",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H240QTW3VW8Z6KNRSNJF76K6"
+                                                          : {
+                                                              "$ref": "#/components/schemas/selection",
+                                                              ? "x-apifox-overrides"
+                                                              : {
+                                                                  "number": null,
+                                                                },
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "number"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : [
+                                                          "id",
+                                                          "number",
+                                                          "name",
+                                                          "groupID",
+                                                          "roleID",
+                                                        ],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["selections"],
+                                          "required": ["selections"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-86460691-run",
+            },
+        },
+      "/pool/{id}/selections/{selectionID}":
+        {
+          "delete":
+            {
+              "summary": "删除签",
+              "x-apifox-folder": "签",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["签"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                  {
+                    "name": "selectionID",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "string" },
+                  },
+                ],
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "selections":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "number":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                          "groupID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "roleID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H240S8RP8ZR4JWBN1AE0JGEF",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H240S8RP8ZR4JWBN1AE0JGEF"
+                                                          : {
+                                                              "$ref": "#/components/schemas/selection",
+                                                              ? "x-apifox-overrides"
+                                                              : {
+                                                                  "number": null,
+                                                                },
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "number"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : [
+                                                          "id",
+                                                          "number",
+                                                          "name",
+                                                          "groupID",
+                                                          "roleID",
+                                                        ],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["selections"],
+                                          "required": ["selections"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-86460692-run",
+            },
+          "patch":
+            {
+              "summary": "修改签",
+              "x-apifox-folder": "签",
+              "x-apifox-status": "developing",
+              "deprecated": false,
+              "description": "",
+              "tags": ["签"],
+              "parameters":
+                [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "integer" },
+                  },
+                  {
+                    "name": "selectionID",
+                    "in": "path",
+                    "description": "",
+                    "required": true,
+                    "schema": { "type": "string" },
+                  },
+                ],
+              "requestBody":
+                {
+                  "content":
+                    {
+                      "application/json":
+                        {
+                          "schema":
+                            {
+                              "type": "object",
+                              "properties":
+                                {
+                                  "id": { "type": "integer" },
+                                  "number": { "type": "integer" },
+                                  "name": { "type": "string" },
+                                  "groupID": { "type": "integer" },
+                                  "roleID": { "type": "integer" },
+                                },
+                              "x-apifox-orders": ["01H240TND6PSRVPVH4NWD2T50T"],
+                              "x-apifox-refs":
+                                {
+                                  "01H240TND6PSRVPVH4NWD2T50T":
+                                    {
+                                      "$ref": "#/components/schemas/selection",
+                                      "x-apifox-overrides": { "number": null },
+                                    },
+                                },
+                              "required": ["id", "number"],
+                              "x-apifox-ignore-properties":
+                                ["id", "number", "name", "groupID", "roleID"],
+                            },
+                        },
+                    },
+                },
+              "responses":
+                {
+                  "200":
+                    {
+                      "description": "成功",
+                      "content":
+                        {
+                          "application/json":
+                            {
+                              "schema":
+                                {
+                                  "type": "object",
+                                  "properties":
+                                    {
+                                      "code":
+                                        { "type": "integer", "const": "0" },
+                                      "msg":
+                                        {
+                                          "type": "string",
+                                          "const": "success",
+                                        },
+                                      "data":
+                                        {
+                                          "type": "object",
+                                          "properties":
+                                            {
+                                              "selections":
+                                                {
+                                                  "type": "array",
+                                                  "items":
+                                                    {
+                                                      "type": "object",
+                                                      "properties":
+                                                        {
+                                                          "id":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "number":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "name":
+                                                            {
+                                                              "type": "string",
+                                                            },
+                                                          "groupID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                          "roleID":
+                                                            {
+                                                              "type": "integer",
+                                                            },
+                                                        },
+                                                      "x-apifox-orders":
+                                                        [
+                                                          "01H240V96EZWTQG5GDRY5YM8GD",
+                                                        ],
+                                                      "x-apifox-refs":
+                                                        {
+                                                          ? "01H240V96EZWTQG5GDRY5YM8GD"
+                                                          : {
+                                                              "$ref": "#/components/schemas/selection",
+                                                              ? "x-apifox-overrides"
+                                                              : {
+                                                                  "number": null,
+                                                                },
+                                                            },
+                                                        },
+                                                      "required":
+                                                        ["id", "number"],
+                                                      ? "x-apifox-ignore-properties"
+                                                      : [
+                                                          "id",
+                                                          "number",
+                                                          "name",
+                                                          "groupID",
+                                                          "roleID",
+                                                        ],
+                                                    },
+                                                },
+                                            },
+                                          "x-apifox-orders": ["selections"],
+                                          "required": ["selections"],
+                                          "x-apifox-ignore-properties": [],
+                                        },
+                                    },
+                                  "x-apifox-orders": ["code", "msg", "data"],
+                                  "required": ["code", "msg", "data"],
+                                  "x-apifox-ignore-properties": [],
+                                },
+                            },
+                        },
+                    },
+                },
+              "x-run-in-apifox": "https://apifox.com/web/project/2768148/apis/api-86460693-run",
+            },
+        },
+    },
+  "components":
+    {
+      "schemas":
+        {
+          "result":
+            {
+              "type": "object",
+              "properties":
+                {
+                  "id": { "type": "integer", "minimum": 1 },
+                  "name": { "type": "string" },
+                  "identify": { "type": "string" },
+                  "selection":
+                    {
+                      "type": "object",
+                      "properties":
+                        {
+                          "id": { "type": "integer" },
+                          "name": { "type": "string" },
+                          "groupID": { "type": "integer" },
+                          "roleID": { "type": "integer" },
+                        },
+                      "x-apifox-orders": ["01H23ZSADYC7874XSJH788YCAK"],
+                      "x-apifox-refs":
+                        {
+                          "01H23ZSADYC7874XSJH788YCAK":
+                            {
+                              "$ref": "#/components/schemas/selection",
+                              "x-apifox-overrides": { "number": null },
+                            },
+                        },
+                      "required": ["id"],
+                      "x-apifox-ignore-properties":
+                        ["id", "name", "groupID", "roleID"],
+                    },
+                },
+              "x-apifox-orders": ["id", "name", "identify", "selection"],
+              "required": ["name", "selection", "identify", "id"],
+              "x-apifox-ignore-properties": [],
+              "x-apifox-folder": "",
+            },
+          "group/role":
+            {
+              "type": "object",
+              "properties":
+                {
+                  "id": { "type": "integer", "minimum": 1, "maximum": 2 },
+                  "name": { "type": "string" },
+                },
+              "x-apifox-orders": ["id", "name"],
+              "required": ["id", "name"],
+              "x-apifox-ignore-properties": [],
+              "x-apifox-folder": "",
+            },
+          "selection":
+            {
+              "type": "object",
+              "properties":
+                {
+                  "id": { "type": "integer" },
+                  "number": { "type": "integer" },
+                  "name": { "type": "string" },
+                  "groupID": { "type": "integer" },
+                  "roleID": { "type": "integer" },
+                },
+              "x-apifox-orders": ["id", "number", "name", "groupID", "roleID"],
+              "required": ["id", "number"],
+              "x-apifox-ignore-properties": [],
+              "x-apifox-folder": "",
+            },
+          "pool":
+            {
+              "type": "object",
+              "properties":
+                {
+                  "id": { "type": "integer", "minimum": 1 },
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "type":
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 4,
+                      "description": "1抽奖2分组3角色分组4抽签",
+                    },
+                  "status":
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 3,
+                      "description": "1未发布2抽签中3已完成",
+                    },
+                  "selections":
+                    {
+                      "type": "array",
+                      "items":
+                        {
+                          "type": "object",
+                          "properties":
+                            {
+                              "id": { "type": "integer" },
+                              "number": { "type": "integer" },
+                              "name": { "type": "string" },
+                              "groupID": { "type": "integer" },
+                              "roleID": { "type": "integer" },
+                            },
+                          "x-apifox-orders": ["01H127TG7X87ZWDC9KZC94RRX3"],
+                          "x-apifox-refs":
+                            {
+                              "01H127TG7X87ZWDC9KZC94RRX3":
+                                {
+                                  "$ref": "#/components/schemas/selection",
+                                  "x-apifox-overrides": { "number": null },
+                                },
+                            },
+                          "required": ["id", "number"],
+                          "x-apifox-ignore-properties":
+                            ["id", "number", "name", "groupID", "roleID"],
+                        },
+                    },
+                  "groups":
+                    {
+                      "type": "array",
+                      "items":
+                        {
+                          "type": "object",
+                          "properties":
+                            {
+                              "id":
+                                {
+                                  "type": "integer",
+                                  "minimum": 1,
+                                  "maximum": 2,
+                                },
+                              "name": { "type": "string" },
+                            },
+                          "x-apifox-orders": ["01H13NZND448W6A3EFE877ZWVD"],
+                          "x-apifox-refs":
+                            {
+                              "01H13NZND448W6A3EFE877ZWVD":
+                                { "$ref": "#/components/schemas/group%2Frole" },
+                            },
+                          "required": ["id", "name"],
+                          "x-apifox-ignore-properties": ["id", "name"],
+                        },
+                    },
+                  "roles":
+                    {
+                      "type": "array",
+                      "items":
+                        {
+                          "type": "object",
+                          "properties":
+                            {
+                              "id":
+                                {
+                                  "type": "integer",
+                                  "minimum": 1,
+                                  "maximum": 2,
+                                },
+                              "name": { "type": "string" },
+                            },
+                          "x-apifox-orders": ["01H23ZPG6ZMG7NDSWG2P784EXR"],
+                          "required": ["id", "name"],
+                          "x-apifox-refs":
+                            {
+                              "01H23ZPG6ZMG7NDSWG2P784EXR":
+                                { "$ref": "#/components/schemas/group%2Frole" },
+                            },
+                          "x-apifox-ignore-properties": ["id", "name"],
+                        },
+                    },
+                },
+              "x-apifox-orders":
+                ["01H127A2QBAVC41NAB8RBPDK2S", "selections", "groups", "roles"],
+              "x-apifox-refs":
+                {
+                  "01H127A2QBAVC41NAB8RBPDK2S":
+                    { "$ref": "#/components/schemas/pool-base" },
+                },
+              "required":
+                ["selections", "id", "name", "description", "type", "status"],
+              "x-apifox-ignore-properties":
+                ["id", "name", "description", "type", "status"],
+              "x-apifox-folder": "",
+            },
+          "pool-base":
+            {
+              "type": "object",
+              "properties":
+                {
+                  "id": { "type": "integer", "minimum": 1 },
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "type":
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 4,
+                      "description": "1抽奖2分组3角色分组4抽签",
+                    },
+                  "status":
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 3,
+                      "description": "1未发布2抽签中3已完成",
+                    },
+                },
+              "x-apifox-orders":
+                ["id", "name", "description", "type", "status"],
+              "required": ["description", "type", "name", "id", "status"],
+              "x-apifox-ignore-properties": [],
+              "x-apifox-folder": "",
+            },
+        },
+    },
+  "servers": [{ "url": "https://133697i2c0.yicp.fun", "description": "线上" }],
+}

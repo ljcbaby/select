@@ -21,10 +21,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to connect MySQL: %v", err)
 	}
-	err = database.ConnectRedis()
-	if err != nil {
-		log.Fatalf("Failed to connect Redis: %v", err)
-	}
 
 	// 初始化路由
 	r := router.SetupRouter()

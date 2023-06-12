@@ -9,25 +9,34 @@
 ## 项目结构(待补充)
 
 ```text
-├── README.md
 ├── config
-│   └── config.go
+│   └── config.go
+├── config.example.yaml
 ├── controller
-│   ├── controller.go
-│   └── draw.go
+│   ├── controller.go
+│   ├── group_controller.go
+│   ├── pool_controller.go
+│   ├── role_controller.go
+│   └── selection_controller.go
+├── database
+│   └── database.go
+├── docs
+│   └── api
+│       └── openapi.yaml
 ├── go.mod
 ├── go.sum
+├── LICENSE
 ├── main.go
 ├── middleware
-│   └── middleware.go
+│   └── middleware.go
 ├── model
-│   ├── draw.go
-│   └── model.go
+│   └── model.go
+├── README.md
 ├── router
-│   └── router.go
-├── service
-│   ├── draw.go
-│   └── service.go
-└── util
-    └── util.go
-```
+│   └── router.go
+└── service
+    ├── draw_service.go
+    ├── group_service.go
+    ├── pool_service.go
+    ├── role_service.go
+    └── selection_service.go```

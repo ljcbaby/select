@@ -8,8 +8,3 @@ MySQL:
   Username: root
   Password: root
   Database: test
-
-Redis:
-  Host: localhost
-  Port: 6379
-  Database: 0
