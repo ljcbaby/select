@@ -222,6 +222,21 @@ func (c *PoolController) UpdatePool(ctx *gin.Context) {
 		returnMySQLError(ctx, err)
 		return
 	}
+	if req.Type == 4 && before.Status == 1 && req.Status == 2 {
+		ss := service.SelectionService{}
+		err = ss.GenerateSelections(poolID)
+		if err != nil {
+			if err.Error() == "PreStatus" {
+				ctx.JSON(http.StatusOK, gin.H{
+					"code": 8,
+					"msg":  "Pre status error.",
+				})
+				return
+			}
+			returnMySQLError(ctx, err)
+			return
+		}
+	}
 	var pool model.Pool
 	err = ps.GetPool(poolID, &pool)
 	if err != nil {

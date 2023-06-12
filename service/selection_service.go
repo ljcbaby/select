@@ -2,6 +2,7 @@ package service
 
 import (
 	"database/sql"
+	"errors"
 
 	"github.com/ljcbaby/select/database"
 	"github.com/ljcbaby/select/model"
@@ -129,4 +130,42 @@ func (s *SelectionService) VerifySelection(poolID int64, id int64) (bool, error)
 		return false, nil
 	}
 	return true, nil
+}
+
+func (s *SelectionService) GenerateSelections(poolID int64) error {
+	var count int
+	err := database.MySQL.QueryRow("SELECT COUNT(*) FROM selections WHERE PoolID = ?", poolID).Scan(&count)
+	if err != nil {
+		return err
+	}
+	if count != 1 {
+		return errors.New("PreStatus")
+	}
+	var n, id int
+	err = database.MySQL.QueryRow("SELECT Number, ID FROM selections WHERE PoolID = ?", poolID).Scan(&n, &id)
+	if err != nil {
+		return err
+	}
+	tx, err := database.MySQL.Begin()
+	if err != nil {
+		return err
+	}
+	for i := 1; i <= n; i++ {
+		_, err = tx.Exec("INSERT INTO selections (PoolID, name, Number) VALUES (?, ?, 1)", poolID, i)
+		if err != nil {
+			tx.Rollback()
+			return err
+		}
+	}
+	_, err = tx.Exec("DELETE FROM selections WHERE ID = ?", id)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	err = tx.Commit()
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	return nil
 }
