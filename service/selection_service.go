@@ -59,7 +59,14 @@ func (s *SelectionService) GetSelections(poolId int64, selections *[]model.Selec
 		if t != 3 {
 			err = rows.Scan(&selection.Id, &selection.Number, &selection.Name)
 		} else {
-			err = rows.Scan(&selection.Id, &selection.Number, &selection.GroupID, &selection.RoleID)
+			var gid, rid sql.NullInt64
+			err = rows.Scan(&selection.Id, &selection.Number, &gid, &rid)
+			if gid.Valid {
+				selection.GroupID = gid.Int64
+			}
+			if rid.Valid {
+				selection.RoleID = rid.Int64
+			}
 		}
 		if err != nil {
 			return err

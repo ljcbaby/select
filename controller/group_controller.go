@@ -75,7 +75,7 @@ func (c *GroupController) UpdateGroup(ctx *gin.Context) {
 	if !v {
 		return
 	}
-	id, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+	id, err := strconv.ParseInt(ctx.Param("groupID"), 10, 64)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -128,7 +128,7 @@ func (c *GroupController) DeleteGroup(ctx *gin.Context) {
 	if !v {
 		return
 	}
-	id, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+	id, err := strconv.ParseInt(ctx.Param("groupID"), 10, 64)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code": 1,

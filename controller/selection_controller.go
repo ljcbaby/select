@@ -58,6 +58,13 @@ func (c *SelectionController) CreateSelection(ctx *gin.Context) {
 	ss := service.SelectionService{}
 	err = ss.CreateSelection(poolID, req)
 	if err != nil {
+		if err.Error() == "Error 1644 (45000): Invalid roleID and groupID combination." {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 3,
+				"msg":  "Invalid roleID and groupID combination.",
+			})
+			return
+		}
 		returnMySQLError(ctx, err)
 		return
 	}
@@ -127,6 +134,13 @@ func (c *SelectionController) UpdateSelection(ctx *gin.Context) {
 	}
 	err = ss.UpdateSelection(ID, req)
 	if err != nil {
+		if err.Error() == "Error 1644 (45000): Invalid roleID and groupID combination." {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 3,
+				"msg":  "Invalid roleID and groupID combination.",
+			})
+			return
+		}
 		returnMySQLError(ctx, err)
 		return
 	}
