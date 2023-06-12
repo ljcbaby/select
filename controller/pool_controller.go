@@ -312,7 +312,85 @@ func (c *PoolController) DeletePool(ctx *gin.Context) {
 }
 
 func (c *PoolController) DrewSelect(ctx *gin.Context) {
-	// 处理抽签的请求
+	PoolID, err := strconv.ParseInt(ctx.Param("poolID"), 10, 64)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "Invalid pool ID.",
+		})
+		return
+	}
+	ps := service.PoolService{}
+	var pool model.Pool
+	err = ps.GetPool(PoolID, &pool)
+	if err != nil {
+		if err.Error() == "noPool" {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 2,
+				"msg":  "Pool not found.",
+			})
+			return
+		}
+		returnMySQLError(ctx, err)
+		return
+	}
+	if pool.Status != 2 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 3,
+			"msg":  "Pool is not in draw status.",
+		})
+		return
+	}
+	var req model.Draw
+	err = ctx.BindJSON(&req)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 4,
+			"msg":  "Invalid request.",
+		})
+		return
+	}
+	if len(req.Name) < 1 || len(req.Name) > 32 || len(req.Identify) < 1 || len(req.Identify) > 16 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 4,
+			"msg":  "Invalid request.",
+		})
+		return
+	}
+	req.PoolId = PoolID
+	ds := service.DrawService{}
+	var result model.Result
+	err = ds.Draw(req, &result)
+	if err != nil {
+		if err.Error() == "hasDrown" {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 5,
+				"msg":  "This person has been drawn.",
+			})
+			return
+		}
+		if err.Error() == "finished" {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 6,
+				"msg":  "Pool is finished.",
+			})
+			return
+		}
+		if err.Error() == "roleFinished" {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 7,
+				"msg":  "Role is finished.",
+			})
+			return
+		}
+		returnMySQLError(ctx, err)
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "success",
+		"data": result,
+	})
 }
 
 func (c *PoolController) GetResults(ctx *gin.Context) {
@@ -338,28 +416,35 @@ func (c *PoolController) GetResults(ctx *gin.Context) {
 		returnMySQLError(ctx, err)
 		return
 	}
-	var results []model.Results
-	ss := service.SelectionService{}
-	err = ss.GetSelectionsByOrder(poolID, &results)
-	if err != nil {
-		returnMySQLError(ctx, err)
+	if pool.Status == 1 {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 2,
+			"msg":  "Pool is not in draw status.",
+		})
 		return
 	}
-	var res []model.Result
-	if pool.Type == 3 {
-		gs := service.GroupService{}
-		err = gs.GetGroups(poolID, &pool.Groups)
+	var results []model.Results
+	if pool.Type != 3 {
+		ss := service.SelectionService{}
+		err = ss.GetSelectionsByOrder(poolID, &results)
 		if err != nil {
 			returnMySQLError(ctx, err)
 			return
 		}
 	} else {
-		ds := service.DrawService{}
-		err = ds.GetDraws(poolID, &res)
+		gs := service.GroupService{}
+		err = gs.GetGroupsByOrder(poolID, &results)
 		if err != nil {
 			returnMySQLError(ctx, err)
 			return
 		}
+	}
+	var res []model.Result
+	ds := service.DrawService{}
+	err = ds.GetDraws(poolID, &res)
+	if err != nil {
+		returnMySQLError(ctx, err)
+		return
 	}
 	for r := range res {
 		for i := range results {

@@ -11,13 +11,13 @@ import (
 type SelectionService struct{}
 
 func (s *SelectionService) GetSelectionsByOrder(poolId int64, selections *[]model.Results) error {
-	rows, err := database.MySQL.Query("SELECT ID, Name FROM selections WHERE PoolID = ?", poolId)
+	rows, err := database.MySQL.Query("SELECT ID, Name FROM selections WHERE PoolID = ? ORDER BY Number ASC, Name ASC", poolId)
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
 
-	if rows.Next() {
+	for rows.Next() {
 		var selection model.Results
 		err := rows.Scan(&selection.Id, &selection.Name)
 		if err != nil {

@@ -9,11 +9,13 @@ type PoolBase struct {
 }
 
 type Selection struct {
-	Id      int64  `json:"id"`
-	Number  int64  `json:"number"`
-	Name    string `json:"name,omitempty"`
-	GroupID int64  `json:"groupID,omitempty"`
-	RoleID  int64  `json:"roleID,omitempty"`
+	Id        int64  `json:"id"`
+	Number    int64  `json:"number"`
+	Name      string `json:"name,omitempty"`
+	GroupID   int64  `json:"groupID,omitempty"`
+	RoleID    int64  `json:"roleID,omitempty"`
+	GroupName string `json:"groupName,omitempty"`
+	RoleName  string `json:"roleName,omitempty"`
 }
 
 type GroupRole struct {
@@ -38,12 +40,19 @@ type Result struct {
 	Identify  string    `json:"identify"`
 	Selection Selection `json:"selection"`
 	RoleName  string    `json:"roleName"`
-	UID       int64
+	UID       int64     `json:"-"`
 }
 
 type Results struct {
 	Id        int64    `json:"id"`
 	Name      string   `json:"name"`
 	GroupName string   `json:"groupName"`
-	Result    []Result `json:"result"`
+	Result    []Result `json:"results"`
+}
+
+type Draw struct {
+	PoolId   int64  `json:"poolId,omitempty"`
+	RoleId   int64  `json:"roleId,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Identify string `json:"identify,omitempty"`
 }

@@ -14,7 +14,7 @@ func (s *GroupService) GetGroupsByOrder(poolId int64, groups *[]model.Results) e
 	}
 	defer rows.Close()
 
-	if rows.Next() {
+	for rows.Next() {
 		var group model.Results
 		err := rows.Scan(&group.Id, &group.GroupName)
 		if err != nil {
