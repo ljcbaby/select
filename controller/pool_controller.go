@@ -253,11 +253,7 @@ func (c *PoolController) UpdatePool(ctx *gin.Context) {
 	ss := service.SelectionService{}
 	err = ss.GetSelections(poolID, &pool.Selections)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 100,
-			"msg":  "MySQL error.",
-			"data": err.Error(),
-		})
+		returnMySQLError(ctx, err)
 		return
 	}
 	if pool.Type == 3 {
@@ -337,7 +333,7 @@ func (c *PoolController) DrewSelect(ctx *gin.Context) {
 	if pool.Status != 2 {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code": 3,
-			"msg":  "Pool is not in draw status.",
+			"msg":  "抽签已结束",
 		})
 		return
 	}
@@ -365,7 +361,7 @@ func (c *PoolController) DrewSelect(ctx *gin.Context) {
 		if err.Error() == "hasDrown" {
 			ctx.JSON(http.StatusOK, gin.H{
 				"code": 5,
-				"msg":  "This person has been drawn.",
+				"msg":  "成员已参与抽签",
 			})
 			return
 		}
@@ -379,7 +375,7 @@ func (c *PoolController) DrewSelect(ctx *gin.Context) {
 		if err.Error() == "roleFinished" {
 			ctx.JSON(http.StatusOK, gin.H{
 				"code": 7,
-				"msg":  "Role is finished.",
+				"msg":  "角色已无空位",
 			})
 			return
 		}
